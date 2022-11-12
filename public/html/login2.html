@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login/Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/242956d36d.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <link rel="stylesheet" href="/css/styles2.css">
+    <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+    <script>
+  var flag=1;
+  var myInput = document.getElementById("pass-hidden");
+  var letter = document.getElementById("letter");
+  var capital = document.getElementById("capital");
+  var number = document.getElementById("number");
+  var length = document.getElementById("length");
+  // When the user starts to type something inside the password field
+  myInput.onkeyup = function() {
+    // Validate lowercase letters
+    var lowerCaseLetters = /[a-z]/g;
+    if(myInput.value.match(lowerCaseLetters)) {
+      letter.classList.remove("invalid");
+      letter.classList.add("valid");
+    } else {
+      letter.classList.remove("valid");
+      letter.classList.add("invalid");
+      flag=0;
+  }
+  
+    // Validate capital letters
+    var upperCaseLetters = /[A-Z]/g;
+    if(myInput.value.match(upperCaseLetters)) {
+      capital.classList.remove("invalid");
+      capital.classList.add("valid");
+    } else {
+      capital.classList.remove("valid");
+      capital.classList.add("invalid");
+      flag=0;
+    }
+  
+    // Validate numbers
+    var numbers = /[0-9]/g;
+    if(myInput.value.match(numbers)) {
+      number.classList.remove("invalid");
+      number.classList.add("valid");
+    } else {
+      number.classList.remove("valid");
+      number.classList.add("invalid");
+      flag=0;
+    }
+  
+    // Validate length
+    if(myInput.value.length >= 8) {
+      length.classList.remove("invalid");
+      length.classList.add("valid");
+    } else {
+      length.classList.remove("valid");
+      length.classList.add("invalid");
+      flag=0;
+    }
+  }
+  if(flag===1)
+    return true;
+  return false;
+ 
+
+
+
+
+  function check_email()
+  {
+  var email=document.getElementById('stud_email').value;
+  console.log("Checking email");
+  if(email.endsWith('@jcboseust.ac.in') && (email.slice(0,11)-'0')===( parseInt(email.slice(0,11))) && email.length==27)
+    return true;
+  return false;
+  }
+  //Student Registration Details
+  function sregister()
+  {
+    const signup=document.querySelector('#register');
+    signup.addEventListener('submit',(e)=>{
+      e.preventDefault();
+    })
+    var name=document.getElementById('stud_name').value;
+    var email=document.getElementById('stud_email').value;
+    var pass = document.getElementById('pass-hidden').value;
+    //console.log(name);
+    //console.log(pass);
+  
+    if(check_email())
+    {
+      firebase.auth().createUserWithEmailAndPassword(email, pass).then((userCredential) => {
+          console.log('Registered Successfully');
+      var user = userCredential.user;
+      window.location.assign("/stlogin");
+    })
+      .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+     });
+    }
+    else
+    {
+      if(!check_email())
+      {
+      console.log("Enter Correct Email Id");
+      window.alert("Enter Correct Email Id");
+      document.forms["registration"]["sEmail"].focus();
+      }
+      return false;
+    }
+  
+  
+  }
+  
+
+    </script>
+</head>
+<body>
+
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+    <a class="navbar-brand" href="#">
+      <img src="https://drive.google.com/uc?id=1AfcJBpAJ7UUmj52qpA5utY0fOvQAQahJ" alt="" width="40" height="35" class="d-inline-block align-text-top">
+     
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+      </ul>
+    
+    </div>
+  </nav>
+
+
+
+
+
+
+    <div class="bg-img">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick="login()">Login</button>
+                <button type="button" class="toggle-btn" onclick="register();">Register</button>
+            </div>
+
+
+          <form id="login" class="input-group" action ="/stlogin" method="POST">
+            <div>
+              <input type="email" id="myEmail"class="input-field" name="myEmail" placeholder="Email" required>
+            </div>
+            <div>
+              
+              <input type="password" class="input-field" id="myInput" name="myInput" placeholder="Password" required>
+              <span class="show" onclick="myFunction()"><i class="far fa-eye" id="togglePassword" ></i></span>
+            </div>
+            <div>
+              <button type="submit" class="submit-btn space">LOGIN</button>
+              <!-- <span class="show" onclick="myFunction()"><i class="far fa-eye" id="togglePassword" ></i></span> -->
+            </div>
+          </form>
+
+
+
+        <!-- Student Registration Form -->
+        <form name="registration" id="register" class="input-group" action ="/streg" method="post">
+          <div>
+            <input type="email" class="input-field" id="stud_email"placeholder="Email" name="sEmail" required>
+          </div>
+          <div>
+            <!-- <i class="fas fa-user"></i> -->
+            <input type="text" class="input-field" id="stud_name"placeholder="Name" name="sName" required>
+          </div>
+          <div>
+            <!-- <i class="fas fa-lock "></i> -->
+            <input type="password" class="input-field" id="pass-hidden" name="sPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+            <span class="show-r" onclick="mFunction()"><i class="far fa-eye" id="togglePassword" ></i></span>
+          </div>
+          <div>
+            <button type="submit" class="submit-btn space" onclick="sregister()">REGISTER</button>
+            <!-- <span class="show-r" onclick="mFunction()">SHOW</span> -->
+          </div>
+        
+        <!-- <div id="pass-text">
+          <h5>Password must contain the following:</h5>
+          <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+          <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+          <p id="number" class="invalid">A <b>number</b></p>
+          <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+        </div> -->
+      </form>
+
+
+        
+    </div>
+    </div>
+    <script src="/js/index.js"></script>
+
+</body>
+</html>

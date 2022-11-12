@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles3.css">
+    <link rel="stylesheet" href="css/badway.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+        <a class="navbar-brand" href="#">
+          <img src="https://drive.google.com/uc?id=1AfcJBpAJ7UUmj52qpA5utY0fOvQAQahJ" alt="" width="40" height="35" class="d-inline-block align-text-top">
+         
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="#">Log-in/Log-out</a>
+              </li>
+          </ul>
+        
+        </div>
+      </nav>
+      <div class="bg-image"></div>
+      <div class="bg-text">
+      <div class="container">
+        <h2 style="padding:5px; color: black;">Current-Recruiters</h2>
+    </div>
+      <table class="table table-striped container" id="id01" >
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">COMPANY</th>
+            <th scope="col">Company Username</th>
+            <th scope="col">LAST DATE OF APPLICATION</th>
+            <th scope="col">Link to Application</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+        <%
+        var size1 = Object.keys(myobj).length;
+         for(i=1;i<size1;i++)
+         {%>
+          <tr style="color: white;">
+            <%var comp="comp"+i;%>
+            <th scope="row"><%=i%></th>
+            <td><%=myobj[comp].name%></td>
+            <td><%=comp%></td>
+            <td><%=myobj[comp].last_date%></td>
+            <td>
+                <form action="/details" method="post">
+                <button class="btn btn-outline-light" name="comp" value="<%=comp%>" type="submit">Apply</button>
+                </form>
+            </td>
+          </tr>
+         <%}%>
+          
+        </tbody>
+      </table>
+       
+
+
+      </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
